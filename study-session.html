@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Study Session - Functional Groups</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#197fe6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                        "success": "#22c55e",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen font-display">
+<div class="max-w-md mx-auto min-h-screen flex flex-col bg-white dark:bg-background-dark shadow-xl">
+<!-- Header -->
+<header class="flex items-center px-4 py-4 justify-between border-b border-gray-100 dark:border-gray-800">
+<button class="text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="text-[#111418] dark:text-white text-lg font-bold leading-tight">Functional Groups</h1>
+<div class="w-10"></div> <!-- Spacer for symmetry -->
+</header>
+<!-- Progress Section -->
+<div class="px-6 py-6 flex flex-col gap-3">
+<div class="flex justify-between items-center">
+<span class="text-gray-600 dark:text-gray-400 text-sm font-medium">Study Progress</span>
+<span class="text-primary font-bold text-sm">3 of 10 cards</span>
+</div>
+<div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full transition-all duration-500" style="width: 30%;"></div>
+</div>
+</div>
+<!-- Flashcard View -->
+<main class="flex-grow px-6 py-4 flex flex-col">
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col h-full min-h-[320px]">
+<!-- Decorative Image/Pattern Area -->
+<div class="h-32 bg-primary/10 flex items-center justify-center border-b border-gray-50 dark:border-gray-700">
+<div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-4xl">science</span>
+</div>
+</div>
+<div class="p-8 flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-4">
+<h2 class="text-3xl font-bold text-[#111418] dark:text-white">Alcohols</h2>
+<div class="flex gap-1">
+<button class="p-2 text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">edit</span>
+</button>
+<button class="p-2 text-gray-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-xl">delete</span>
+</button>
+</div>
+</div>
+<p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+                        Characterized by the presence of a <span class="text-primary font-semibold">hydroxyl group (-OH)</span>.
+                    </p>
+</div>
+</div>
+<!-- Mastery Stats -->
+<section class="mt-8 mb-4">
+<h3 class="text-gray-400 dark:text-gray-500 text-xs font-bold uppercase tracking-widest mb-4 px-1">Mastery Stats</h3>
+<div class="grid grid-cols-1 gap-3">
+<!-- Stat Item 1 -->
+<div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined text-sm">done_all</span>
+</div>
+<span class="text-gray-700 dark:text-gray-300 font-medium">Reviews completed</span>
+</div>
+<span class="text-[#111418] dark:text-white font-bold">3</span>
+</div>
+<!-- Stat Item 2 -->
+<div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-3">
+<div class="bg-orange-100 p-2 rounded-lg text-orange-600">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+</div>
+<span class="text-gray-700 dark:text-gray-300 font-medium">Next review</span>
+</div>
+<span class="text-[#111418] dark:text-white font-bold">Feb 15</span>
+</div>
+<!-- Stat Item 3 -->
+<div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-3">
+<div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+<span class="material-symbols-outlined text-sm">hourglass_empty</span>
+</div>
+<span class="text-gray-700 dark:text-gray-300 font-medium">Remaining reviews</span>
+</div>
+<span class="text-[#111418] dark:text-white font-bold">2</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Action -->
+<footer class="p-6 border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-background-dark sticky bottom-0">
+<button class="w-full bg-success hover:bg-success/90 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-success/20">
+<span class="material-symbols-outlined fill-1">check_circle</span>
+<span>Studied Today</span>
+</button>
+</footer>
+</div>
+</body></html>
