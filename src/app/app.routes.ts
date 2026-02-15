@@ -11,7 +11,7 @@ export const routes: Routes = [
   },
   {
     path: 'subjects/:id',
-    loadComponent: () => import('./features/subjects/subject-detail.component').then(m => m.SubjectDetailComponent)
+    loadComponent: () => import('./features/subject-detail/subject-detail.component').then(m => m.SubjectDetailComponent)
   },
   {
     path: 'review',

@@ -1,0 +1,148 @@
+@if (loading()) {
+  <div class="flex justify-center items-center h-screen">
+    <p class="text-gray-600">Loading...</p>
+  </div>
+} @else if (subject()) {
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <button 
+        type="button"
+        (click)="goBack()"
+        class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-blue-50 transition-colors"
+        aria-label="Go back">
+        <span class="material-symbols-outlined text-gray-900">arrow_back</span>
+      </button>
+      <h1 class="text-xl font-bold tracking-tight">{{ subject()!.name }}</h1>
+    </div>
+    <button 
+      type="button"
+      [matMenuTriggerFor]="menu"
+      class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-blue-50 transition-colors"
+      aria-label="More options">
+      <span class="material-symbols-outlined text-gray-900">more_vert</span>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button type="button" mat-menu-item>
+        <span class="material-symbols-outlined mr-2">edit</span>
+        Edit Subject
+      </button>
+      <button type="button" mat-menu-item>
+        <span class="material-symbols-outlined mr-2">delete</span>
+        Delete Subject
+      </button>
+    </mat-menu>
+  </header>
+
+  <main class="max-w-3xl mx-auto pb-32">
+    <!-- Stats Dashboard -->
+    <section class="p-4 grid grid-cols-3 gap-3">
+      <div class="flex flex-col gap-1 rounded-xl p-4 bg-white border border-gray-200 shadow-sm">
+        <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Total Cards</p>
+        <p class="text-2xl font-bold text-[#197fe6]">{{ totalCards() }}</p>
+      </div>
+      <div class="flex flex-col gap-1 rounded-xl p-4 bg-white border border-gray-200 shadow-sm">
+        <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Overdue</p>
+        <p class="text-2xl font-bold text-red-500">{{ overdueCards() }}</p>
+      </div>
+      <div class="flex flex-col gap-1 rounded-xl p-4 bg-white border border-gray-200 shadow-sm">
+        <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Avg. Mastery</p>
+        <p class="text-2xl font-bold text-[#197fe6]">{{ averageMastery() }}%</p>
+      </div>
+    </section>
+
+    <!-- Contents Section -->
+    <section class="px-4 py-2">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-bold">Contents</h2>
+        <span class="text-sm text-[#197fe6] font-medium">{{ totalCards() }} Topics</span>
+      </div>
+
+      @if (totalCards() === 0) {
+        <!-- Empty State -->
+        <div class="flex flex-col items-center justify-center py-12 text-center">
+          <span class="material-symbols-outlined text-gray-300 mb-4" style="font-size: 64px;">folder_open</span>
+          <p class="text-lg font-medium text-gray-900 mb-2">No contents yet</p>
+          <p class="text-sm text-gray-500 mb-6">Create your first content to start learning</p>
+          <button
+            type="button"
+            (click)="openCreateContentDialog()"
+            class="px-6 py-2 bg-[#197fe6] hover:bg-[#1570d1] text-white font-medium rounded-lg transition-colors">
+            Create Content
+          </button>
+        </div>
+      } @else {
+        <!-- List of Topics -->
+        <div class="space-y-3">
+          @for (content of contentService.contents(); track content.id) {
+            <div 
+              (click)="navigateToContent(content)"
+              [class]="'flex items-center gap-4 bg-white p-4 rounded-xl border shadow-sm hover:border-[#197fe6]/30 transition-all cursor-pointer group ' + getStatusClass(content)">
+              <div [class]="'w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ' + getIconBackground(content)">
+                <span [class]="'material-symbols-outlined ' + getIconColor(content)">{{ getIcon(content) }}</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2">
+                  <p class="text-base font-bold truncate">{{ content.title }}</p>
+                  <span [class]="'px-2 py-0.5 rounded text-[10px] font-bold uppercase ' + getLevelBadgeClass(content)">
+                    Level {{ content.reviewLevel }}
+                  </span>
+                </div>
+                <div class="flex items-center gap-2 mt-1">
+                  <span [class]="'material-symbols-outlined text-[14px] ' + (getContentStatus(content) === 'overdue' ? 'text-red-500' : 'text-gray-400')">
+                    {{ getNextReviewIcon(content) }}
+                  </span>
+                  <p [class]="'text-sm ' + getNextReviewClass(content)">
+                    Next Review: {{ formatNextReview(content) }}
+                  </p>
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-gray-300 group-hover:text-[#197fe6] transition-colors">chevron_right</span>
+            </div>
+          }
+        </div>
+      }
+    </section>
+
+    <!-- Empty state spacing -->
+    <div class="h-10"></div>
+  </main>
+
+  <!-- Floating Action Button -->
+  <div class="fixed bottom-24 right-4 z-50">
+    <button
+      type="button"
+      (click)="openCreateContentDialog()"
+      class="flex items-center justify-center w-14 h-14 bg-white text-[#197fe6] rounded-full shadow-lg border border-[#197fe6]/20 hover:scale-105 transition-transform"
+      aria-label="Add content">
+      <span class="material-symbols-outlined text-[32px]">add</span>
+    </button>
+  </div>
+
+  <!-- Bottom Primary Action -->
+  <footer class="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-md border-t border-gray-200">
+    <div class="max-w-3xl mx-auto">
+      <button
+        type="button"
+        (click)="startStudySession()"
+        [disabled]="overdueCards() === 0"
+        [class]="overdueCards() === 0 
+          ? 'w-full bg-gray-300 text-gray-500 font-bold py-4 rounded-xl cursor-not-allowed flex items-center justify-center gap-2'
+          : 'w-full bg-[#197fe6] hover:bg-[#1570d1] text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2'">
+        <span class="material-symbols-outlined">play_circle</span>
+        Start Study Session
+      </button>
+    </div>
+  </footer>
+} @else {
+  <div class="flex flex-col items-center justify-center h-screen">
+    <span class="material-symbols-outlined text-gray-300 mb-4" style="font-size: 64px;">error_outline</span>
+    <p class="text-xl text-red-600 mb-4">Subject not found</p>
+    <button
+      type="button"
+      routerLink="/subjects"
+      class="px-6 py-2 bg-[#197fe6] hover:bg-[#1570d1] text-white font-medium rounded-lg transition-colors">
+      Go back to Subjects
+    </button>
+  </div>
+}
