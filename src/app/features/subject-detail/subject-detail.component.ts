@@ -210,7 +210,6 @@ export class SubjectDetailComponent implements OnInit {
   }
 
   navigateToContent(content: Content) {
-    // TODO: Navigate to content detail or edit
-    this.openEditContentDialog(content);
+    this.router.navigate(['/content', content.id]);
   }
 }

@@ -1,0 +1,141 @@
+@if (loading()) {
+  <div class="flex justify-center items-center h-screen">
+    <p class="text-gray-600">Loading...</p>
+  </div>
+} @else if (content(); as contentItem) {
+  <div class="mx-auto min-h-screen flex flex-col bg-white shadow-xl pb-20">
+    <!-- Header -->
+    <header class="flex items-center px-4 py-4 justify-between border-b border-gray-100">
+      <button type="button" (click)="goBack()"
+        class="text-gray-600 hover:bg-gray-100 p-2 rounded-full transition-colors" aria-label="Go back">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h1 class="text-gray-900 text-lg font-bold leading-tight">{{ getSubjectName(contentItem.subjectId) }}</h1>
+      <button 
+        type="button"
+        (click)="openEditDialog()"
+        class="text-gray-600 hover:bg-gray-100 p-2 rounded-full transition-colors"
+        aria-label="Edit content">
+        <span class="material-symbols-outlined">edit</span>
+      </button>
+    </header>
+
+    <!-- Progress Section -->
+    <div class="px-6 py-6 flex flex-col gap-3">
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600 text-sm font-medium">Mastery Level</span>
+        <span class="text-[#197fe6] font-bold text-sm">Level {{ contentItem.reviewLevel }} - {{ progressPercentage() }}%</span>
+      </div>
+      <div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden">
+        <div class="bg-[#197fe6] h-full rounded-full transition-all duration-500"
+          [style.width.%]="progressPercentage()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Flashcard View -->
+    <main class="flex-grow px-6 py-4 flex flex-col">
+      <div
+        class="bg-white rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-gray-100 overflow-hidden flex flex-col h-full min-h-[320px]">
+        <!-- Decorative Image/Pattern Area -->
+        <div class="h-32 bg-[#197fe6]/10 flex items-center justify-center border-b border-gray-50">
+          <div class="w-20 h-20 bg-[#197fe6]/20 rounded-full flex items-center justify-center">
+            <span class="material-symbols-outlined text-[#197fe6] text-4xl">{{ getCardIcon() }}</span>
+          </div>
+        </div>
+
+        <div class="p-8 flex flex-col flex-grow">
+          <div class="flex justify-between items-start mb-4">
+            <h2 class="text-3xl font-bold text-gray-900">{{ contentItem.title }}</h2>
+          </div>
+          @if (contentItem.description) {
+            <p class="text-gray-600 text-lg leading-relaxed">
+              {{ contentItem.description }}
+            </p>
+          }
+        </div>
+      </div>
+
+      <!-- Mastery Stats -->
+      <section class="mt-8 mb-4">
+        <h3 class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-4 px-1">Mastery Stats</h3>
+        <div class="grid grid-cols-1 gap-3">
+          <!-- Stat Item 1 -->
+          <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <div class="flex items-center gap-3">
+              <div class="bg-[#197fe6]/10 p-2 rounded-lg text-[#197fe6]">
+                <span class="material-symbols-outlined text-sm">done_all</span>
+              </div>
+              <span class="text-gray-700 font-medium">Reviews completed</span>
+            </div>
+            <span class="text-gray-900 font-bold">{{ contentItem.totalReviews }}</span>
+          </div>
+
+          <!-- Stat Item 2 -->
+          <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <div class="flex items-center gap-3">
+              <div [class]="isOverdue() || isDueToday() ? 'bg-red-100 p-2 rounded-lg text-red-600' : 'bg-orange-100 p-2 rounded-lg text-orange-600'">
+                <span class="material-symbols-outlined text-sm">calendar_month</span>
+              </div>
+              <span class="text-gray-700 font-medium">Next review</span>
+            </div>
+            <span [class]="isOverdue() || isDueToday() ? 'text-red-600 font-bold' : 'text-gray-900 font-bold'">
+              {{ formatNextReview(contentItem) }}
+              @if (isOverdue()) {
+                <span class="text-xs">(Overdue)</span>
+              }
+              @if (isDueToday()) {
+                <span class="text-xs">(Due Today)</span>
+              }
+            </span>
+          </div>
+
+          <!-- Stat Item 3 -->
+          <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100">
+            <div class="flex items-center gap-3">
+              <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                <span class="material-symbols-outlined text-sm">trending_up</span>
+              </div>
+              <span class="text-gray-700 font-medium">Current level</span>
+            </div>
+            <span class="text-gray-900 font-bold">Level {{ contentItem.reviewLevel }}</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Action Buttons -->
+      <section class="mt-4 mb-4">
+        <button
+          type="button"
+          (click)="confirmDelete()"
+          class="w-full bg-red-50 hover:bg-red-100 text-red-600 font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition-all border border-red-200">
+          <span class="material-symbols-outlined text-sm">delete</span>
+          <span>Delete Content</span>
+        </button>
+      </section>
+    </main>
+
+    <!-- Footer Action -->
+    <footer class="p-6 border-t border-gray-100 bg-white sticky bottom-0">
+      <button type="button" (click)="registerStudy()" [disabled]="studyingContent() !== null"
+        [class]="studyingContent() !== null 
+          ? 'w-full bg-gray-300 text-gray-500 font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2 cursor-not-allowed'
+          : 'w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-green-500/20'">
+        <span class="material-symbols-outlined">check_circle</span>
+        <span>{{ studyingContent() !== null ? 'Processing...' : 'Studied Today' }}</span>
+      </button>
+    </footer>
+  </div>
+} @else {
+  <div class="flex flex-col items-center justify-center h-screen text-center px-6">
+    <span class="material-symbols-outlined text-gray-300 mb-4" style="font-size: 96px;">error_outline</span>
+    <h2 class="text-2xl font-bold text-gray-900 mb-2">Content Not Found</h2>
+    <p class="text-gray-600 mb-6">This content may have been deleted or doesn't exist.</p>
+    <button
+      type="button"
+      (click)="goBack()"
+      class="px-6 py-2 bg-[#197fe6] hover:bg-[#1570d1] text-white font-medium rounded-lg transition-colors">
+      Go Back
+    </button>
+  </div>
+}
