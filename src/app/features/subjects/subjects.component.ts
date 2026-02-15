@@ -9,8 +9,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { SubjectService } from './subject.service';
 import { ContentService } from '../contents/content.service';
 import { Subject } from '../../shared/models/subject.model';
-import { SubjectFormDialogComponent } from './subject-form-dialog.component';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog.component';
+import { SubjectFormDialogComponent } from './subject-form-dialog.component';
 
 @Component({
   selector: 'app-subjects',
@@ -23,71 +23,7 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog.c
     MatDialogModule,
     MatBadgeModule
   ],
-  template: `
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold">Subjects</h1>
-      <button mat-raised-button color="primary" (click)="openCreateDialog()">
-        <mat-icon>add</mat-icon>
-        New Subject
-      </button>
-    </div>
-
-    @if (loading()) {
-      <div class="flex justify-center items-center h-64">
-        <p>Loading...</p>
-      </div>
-    } @else if (subjectService.subjects().length === 0) {
-      <div class="text-center p-8">
-        <mat-icon class="text-6xl text-gray-400 mb-4">folder_off</mat-icon>
-        <p class="text-xl text-gray-600">No subjects yet</p>
-        <p class="text-gray-500 mb-4">Create your first subject to start organizing your study content</p>
-        <button mat-raised-button color="primary" (click)="openCreateDialog()">
-          <mat-icon>add</mat-icon>
-          Create Subject
-        </button>
-      </div>
-    } @else {
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        @for (subject of subjectService.subjects(); track subject.id) {
-          <mat-card class="cursor-pointer hover:shadow-lg transition-shadow">
-            <mat-card-header>
-              <mat-card-title class="flex items-center gap-2">
-                <mat-icon>folder</mat-icon>
-                {{ subject.name }}
-              </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              @if (subject.description) {
-                <p class="text-gray-600 mb-4">{{ subject.description }}</p>
-              }
-              <div class="flex gap-4 text-sm text-gray-500">
-                <span>
-                  <strong>Total:</strong> {{ getSubjectStats(subject.id).total }}
-                </span>
-                <span [class.text-red-600]="getSubjectStats(subject.id).overdue > 0">
-                  <strong>Overdue:</strong> {{ getSubjectStats(subject.id).overdue }}
-                </span>
-              </div>
-            </mat-card-content>
-            <mat-card-actions class="flex gap-2">
-              <button mat-button color="primary" [routerLink]="['/subjects', subject.id]">
-                <mat-icon>visibility</mat-icon>
-                View
-              </button>
-              <button mat-button (click)="openEditDialog(subject)">
-                <mat-icon>edit</mat-icon>
-                Edit
-              </button>
-              <button mat-button color="warn" (click)="confirmDelete(subject)">
-                <mat-icon>delete</mat-icon>
-                Delete
-              </button>
-            </mat-card-actions>
-          </mat-card>
-        }
-      </div>
-    }
-  `,
+  templateUrl: './subjects.component.html',
   styles: [`
     :host {
       display: block;
