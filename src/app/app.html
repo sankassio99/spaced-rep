@@ -5,6 +5,10 @@
   </span>
   <span class="flex-1"></span>
   <nav class="flex gap-2">
+    <a mat-button routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+      <mat-icon>home</mat-icon>
+      <span class="ml-1">Home</span>
+    </a>
     <a mat-button routerLink="/subjects" routerLinkActive="active-link">
       <mat-icon>folder</mat-icon>
       <span class="ml-1">Subjects</span>
