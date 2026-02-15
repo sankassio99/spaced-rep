@@ -46,42 +46,69 @@ export class FirebaseService {
   }
 
   async getAll<T>(collectionPath: string, ...constraints: QueryConstraint[]): Promise<T[]> {
-    const collectionRef = collection(this.db, collectionPath);
-    const q = query(collectionRef, ...constraints);
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as T));
+    try {
+      const collectionRef = collection(this.db, collectionPath);
+      const q = query(collectionRef, ...constraints);
+      const snapshot = await getDocs(q);
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as T));
+    } catch (error) {
+      console.error('Error getting documents:', error);
+      throw error;
+    }
   }
 
   async getById<T>(collectionPath: string, id: string): Promise<T | null> {
-    const docRef = doc(this.db, collectionPath, id);
-    const snapshot = await getDoc(docRef);
-    if (!snapshot.exists()) {
-      return null;
+    try {
+      const docRef = doc(this.db, collectionPath, id);
+      const snapshot = await getDoc(docRef);
+      if (!snapshot.exists()) {
+        return null;
+      }
+      return { id: snapshot.id, ...snapshot.data() } as T;
+    } catch (error) {
+      console.error('Error getting document:', error);
+      throw error;
     }
-    return { id: snapshot.id, ...snapshot.data() } as T;
   }
 
   async create<T>(collectionPath: string, data: Partial<T>): Promise<string> {
-    const collectionRef = collection(this.db, collectionPath);
-    const docRef = await addDoc(collectionRef, {
-      ...data,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now()
-    });
-    return docRef.id;
+    try {
+      const collectionRef = collection(this.db, collectionPath);
+      const docData = {
+        ...data as Record<string, any>,
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now()
+      };
+      const docRef = await addDoc(collectionRef, docData);
+      return docRef.id;
+    } catch (error) {
+      console.error('Error creating document:', error);
+      throw error;
+    }
   }
 
   async update<T>(collectionPath: string, id: string, data: Partial<T>): Promise<void> {
-    const docRef = doc(this.db, collectionPath, id);
-    await updateDoc(docRef, {
-      ...data,
-      updatedAt: Timestamp.now()
-    });
+    try {
+      const docRef = doc(this.db, collectionPath, id);
+      const updateData = {
+        ...data as Record<string, any>,
+        updatedAt: Timestamp.now()
+      };
+      await updateDoc(docRef, updateData);
+    } catch (error) {
+      console.error('Error updating document:', error);
+      throw error;
+    }
   }
 
   async delete(collectionPath: string, id: string): Promise<void> {
-    const docRef = doc(this.db, collectionPath, id);
-    await deleteDoc(docRef);
+    try {
+      const docRef = doc(this.db, collectionPath, id);
+      await deleteDoc(docRef);
+    } catch (error) {
+      console.error('Error deleting document:', error);
+      throw error;
+    }
   }
 
   createTimestamp(date?: Date): Timestamp {

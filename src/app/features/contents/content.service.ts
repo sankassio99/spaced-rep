@@ -58,6 +58,7 @@ export class ContentService {
   }
 
   async create(data: CreateContent): Promise<string> {
+    console.log('Creating content:', data);
     const nextReviewDate = calculateNextReviewDate(0);
     const contentData = {
       ...data,
@@ -66,8 +67,10 @@ export class ContentService {
       studyHistory: [],
       totalReviews: 0
     };
+    console.log('Content data prepared:', contentData);
 
     const id = await this.firebaseService.create(this.COLLECTION, contentData);
+    console.log('Content created with ID:', id);
     await this.loadAll();
     return id;
   }
@@ -83,6 +86,7 @@ export class ContentService {
   }
 
   async registerStudy(id: string): Promise<void> {
+    console.log('Registering study for content:', id);
     const content = await this.getById(id);
     if (!content) {
       throw new Error('Content not found');
@@ -100,8 +104,10 @@ export class ContentService {
       studyHistory: [...content.studyHistory, newHistoryEntry],
       totalReviews: content.totalReviews + 1
     };
+    console.log('Updating content with data:', updateData);
 
     await this.firebaseService.update(this.COLLECTION, id, updateData);
+    console.log('Study registered successfully');
     await this.loadAll();
   }
 
