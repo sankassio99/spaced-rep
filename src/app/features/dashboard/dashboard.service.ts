@@ -44,13 +44,13 @@ export class DashboardService {
 
   // Subject icons and colors mapping
   private readonly subjectIcons: Record<string, { icon: string; color: string }> = {
-    default: { icon: 'folder', color: 'text-primary bg-primary/10' },
-    biology: { icon: 'biotech', color: 'text-primary bg-primary/10' },
-    chemistry: { icon: 'science', color: 'text-purple-600 bg-purple-100' },
-    history: { icon: 'public', color: 'text-orange-600 bg-orange-100' },
-    language: { icon: 'translate', color: 'text-green-600 bg-green-100' },
-    math: { icon: 'calculate', color: 'text-blue-600 bg-blue-100' },
-    physics: { icon: 'psychology', color: 'text-indigo-600 bg-indigo-100' }
+    default: { icon: 'folder', color: 'text-blue-600 bg-blue-50' },
+    biology: { icon: 'biotech', color: 'text-cyan-600 bg-cyan-50' },
+    chemistry: { icon: 'science', color: 'text-purple-600 bg-purple-50' },
+    history: { icon: 'public', color: 'text-orange-600 bg-orange-50' },
+    language: { icon: 'translate', color: 'text-green-600 bg-green-50' },
+    math: { icon: 'calculate', color: 'text-blue-600 bg-blue-50' },
+    physics: { icon: 'psychology', color: 'text-indigo-600 bg-indigo-50' }
   };
 
   async loadDashboardData(): Promise<void> {
