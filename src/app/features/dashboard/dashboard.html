@@ -1,4 +1,4 @@
-<div class="relative flex min-h-screen w-full max-w-md mx-auto flex-col bg-background-light pb-20">
+<div class="relative flex min-h-screen w-full mx-auto flex-col bg-background-light">
     <!-- Header Section -->
     <header class="flex items-center bg-white p-4 sticky top-0 z-10 border-b border-[#e8ecef]">
         <div class="flex size-12 shrink-0 items-center mr-3">
@@ -108,27 +108,4 @@
         class="fixed bottom-24 right-6 size-16 bg-primary text-white rounded-full shadow-[0_8px_24px_rgba(25,127,230,0.4)] flex items-center justify-center hover:scale-105 hover:shadow-[0_12px_32px_rgba(25,127,230,0.5)] active:scale-95 transition-all z-20">
         <span class="material-symbols-outlined text-[32px]">add</span>
     </button>
-
-    <!-- Bottom Navigation Bar -->
-    <nav
-        class="fixed bottom-0 left-0 right-0 max-w-md mx-auto border-t border-[#e8ecef] bg-white/98 backdrop-blur-md px-4 pb-6 pt-4 flex justify-between items-center z-30 shadow-[0_-2px_8px_rgba(0,0,0,0.04)]">
-        <a class="flex flex-1 flex-col items-center gap-1.5 text-primary" [routerLink]="['/']">
-            <span class="material-symbols-outlined material-fill text-2xl">home</span>
-            <span class="text-[11px] font-bold">Home</span>
-        </a>
-        <a class="flex flex-1 flex-col items-center gap-1.5 text-[#9ca3af] hover:text-primary transition-colors"
-            [routerLink]="['/review']">
-            <span class="material-symbols-outlined text-2xl">bar_chart</span>
-            <span class="text-[11px] font-medium">Stats</span>
-        </a>
-        <a class="flex flex-1 flex-col items-center gap-1.5 text-[#9ca3af] hover:text-primary transition-colors"
-            [routerLink]="['/subjects']">
-            <span class="material-symbols-outlined text-2xl">library_books</span>
-            <span class="text-[11px] font-medium">Library</span>
-        </a>
-        <button class="flex flex-1 flex-col items-center gap-1.5 text-[#9ca3af] hover:text-primary transition-colors">
-            <span class="material-symbols-outlined text-2xl">settings</span>
-            <span class="text-[11px] font-medium">Settings</span>
-        </button>
-    </nav>
 </div>
