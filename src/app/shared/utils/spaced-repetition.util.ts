@@ -1,4 +1,4 @@
-export const SPACED_REPETITION_INTERVALS = [1, 3, 7, 15, 30] as const;
+export const SPACED_REPETITION_INTERVALS = [0, 1, 3, 7, 15, 30] as const;
 
 export function calculateNextReviewDate(reviewLevel: number): Date {
   const now = new Date();
