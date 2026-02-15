@@ -1,0 +1,9 @@
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.active-link {
+  background-color: rgba(255, 255, 255, 0.1);
+}
