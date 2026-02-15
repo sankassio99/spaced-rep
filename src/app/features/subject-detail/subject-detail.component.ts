@@ -66,7 +66,7 @@ export class SubjectDetailComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/subjects']);
+    this.router.navigate(['/']);
   }
 
   openCreateContentDialog() {

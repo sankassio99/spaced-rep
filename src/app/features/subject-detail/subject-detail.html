@@ -4,7 +4,7 @@
   </div>
 } @else if (subject()) {
   <!-- Top Navigation Bar -->
-  <header class="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 px-4 py-3 flex items-center justify-between">
+  <header class="sticky top-0 z-50 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <button 
         type="button"
@@ -77,7 +77,7 @@
           @for (content of contentService.contents(); track content.id) {
             <div 
               (click)="navigateToContent(content)"
-              [class]="'flex items-center gap-4 bg-white p-4 rounded-xl border shadow-sm hover:border-[#197fe6]/30 transition-all cursor-pointer group ' + getStatusClass(content)">
+              [class]="'flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm hover:border-[#197fe6]/30 transition-all cursor-pointer group ' + getStatusClass(content)">
               <div [class]="'w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ' + getIconBackground(content)">
                 <span [class]="'material-symbols-outlined ' + getIconColor(content)">{{ getIcon(content) }}</span>
               </div>
