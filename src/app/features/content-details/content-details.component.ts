@@ -1,5 +1,5 @@
 import { Component, OnInit, signal, inject, computed, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ContentService } from '../contents/content.service';
 import { SubjectService } from '../subjects/subject.service';
@@ -10,7 +10,7 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog.c
 
 @Component({
   selector: 'app-content-details',
-  imports: [RouterLink, MatDialogModule],
+  imports: [MatDialogModule],
   templateUrl: './content-details.html',
   styles: [`
     :host {
